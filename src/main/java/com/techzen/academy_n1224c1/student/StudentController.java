@@ -1,4 +1,4 @@
-package com.techzen.academy_n1224c1;
+package com.techzen.academy_n1224c1.student;
 
 import com.techzen.academy_n1224c1.dto.ApiException;
 import com.techzen.academy_n1224c1.dto.ApiResponse;

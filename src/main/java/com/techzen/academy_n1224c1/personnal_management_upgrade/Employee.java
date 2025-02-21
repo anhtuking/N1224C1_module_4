@@ -1,4 +1,4 @@
-package com.techzen.academy_n1224c1.personnel_management;
+package com.techzen.academy_n1224c1.personnal_management_upgrade;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,4 +18,5 @@ public class Employee {
     Gender gender;
     String phone;
     double salary;
+    Integer departmentId;
 }
