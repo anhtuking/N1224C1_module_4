@@ -1,4 +1,4 @@
-package com.techzen.academy_n1224c1;
+package com.techzen.academy_n1224c1.student;
 
 public class Student {
     private int id;
