@@ -1,4 +1,4 @@
-package com.techzen.academy_n1224c1.personnal_management_upgrade;
+package com.techzen.academy_n1224c1.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

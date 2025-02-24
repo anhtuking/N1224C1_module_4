@@ -1,8 +1,9 @@
-package com.techzen.academy_n1224c1.personnal_management_upgrade;
+package com.techzen.academy_n1224c1.controller;
 
 import com.techzen.academy_n1224c1.dto.ApiException;
 import com.techzen.academy_n1224c1.dto.JsonResponse;
 import com.techzen.academy_n1224c1.exception.ErrorCode;
+import com.techzen.academy_n1224c1.model.Department;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/departments")
 public class DepartmentController {
     private final List<Department> departments = new ArrayList<>(
             Arrays.asList(

@@ -1,5 +1,6 @@
-package com.techzen.academy_n1224c1.personnal_management_upgrade;
+package com.techzen.academy_n1224c1.model;
 
+import com.techzen.academy_n1224c1.enums.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
