@@ -6,10 +6,12 @@ import com.techzen.academy_n1224c1.dto.JsonResponse;
 import com.techzen.academy_n1224c1.dto.empolyee.EmployeeSearchRequest;
 import com.techzen.academy_n1224c1.exception.ErrorCode;
 import com.techzen.academy_n1224c1.model.Employee;
+import com.techzen.academy_n1224c1.model.Student;
 import com.techzen.academy_n1224c1.service.IEmployeeService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,33 +24,39 @@ import java.util.*;
 public class EmployeeControllerV2 {
     IEmployeeService employeeService;
 
-    @GetMapping
-    public ResponseEntity<?> getEmployees(EmployeeSearchRequest employeeSearchRequest) {
-        return JsonResponse.ok(employeeService.findByAttributes(employeeSearchRequest));
-    }
+//    @GetMapping
+//    public ResponseEntity<?> getEmployees(EmployeeSearchRequest employeeSearchRequest) {
+//        return JsonResponse.ok(employeeService.findByAttributes(employeeSearchRequest));
+//    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") UUID id) {
-        return employeeService.findByID(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST));
+    public ResponseEntity<ApiResponse<Employee>> getById(@PathVariable("id") int id) {
+        Employee employee = employeeService.findByID(id);
+        if (employee == null) {
+            throw new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST);
+        }
+        return ResponseEntity.ok(ApiResponse.<Employee>builder()
+                .data(employee)
+                .build());
     }
 
     @PostMapping
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
-        return JsonResponse.created(employeeService.save(employee));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.builder()
+                .data(employeeService.save(employee))
+                .build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable("id") UUID id, @RequestBody Employee employee) {
-        employeeService.findByID(id).orElseThrow(() -> new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST));
+    public ResponseEntity<?> updateEmployee(@PathVariable("id") int id, @RequestBody Employee employee) {
         employee.setId(id);
-        return JsonResponse.ok(employeeService.save(employee));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.builder()
+                .data(employeeService.save(employee))
+                .build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") UUID id) {
-        employeeService.findByID(id).orElseThrow(() -> new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST));
+    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") int id) {
         employeeService.delete(id);
         return ResponseEntity.noContent().build();
     }

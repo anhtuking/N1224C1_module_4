@@ -2,6 +2,7 @@ package com.techzen.academy_n1224c1.service.impl;
 
 import com.techzen.academy_n1224c1.dto.empolyee.EmployeeSearchRequest;
 import com.techzen.academy_n1224c1.model.Employee;
+import com.techzen.academy_n1224c1.model.Student;
 import com.techzen.academy_n1224c1.repository.impl.EmployeeRepository;
 import com.techzen.academy_n1224c1.repository.impl.StudentRepository;
 import com.techzen.academy_n1224c1.service.IEmployeeService;
@@ -18,22 +19,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class EmployeeService implements IEmployeeService {
-    EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    @Override
     public List<Employee> findByAttributes(EmployeeSearchRequest employeeSearchRequest) {
         return employeeRepository.findByAttributes(employeeSearchRequest);
     }
-    @Override
-    public Optional<Employee> findByID(UUID id) {
+
+    public List<Employee> findByName(String name) {
+        return employeeRepository.findByName(name);
+    }
+
+    public Employee findByID(int id) {
         return employeeRepository.findByID(id);
     }
-    @Override
+
     public Employee save(Employee employee) {
         return employeeRepository.save(employee);
     }
-    @Override
-    public void delete(UUID id) {
-        employeeRepository.delete(id);
+
+    public Employee delete(int id) {
+        return employeeRepository.delete(id);
     }
-}
+    }

@@ -16,9 +16,9 @@ import java.time.LocalDate;
 public class EmployeeSearchRequest {
     String name;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE);
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate dobFrom;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE);
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate dobTo;
 
     Gender gender;

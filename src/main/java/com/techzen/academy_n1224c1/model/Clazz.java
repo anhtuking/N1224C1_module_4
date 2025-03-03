@@ -2,6 +2,7 @@ package com.techzen.academy_n1224c1.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import javax.persistence.*;
 
 @Getter
@@ -11,11 +12,10 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @Entity
-public class Department {
+public class Clazz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
+    private int id;
     @Column(columnDefinition = "varchar(50)")
-    String name;
+    private String name;
 }
