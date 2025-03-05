@@ -3,7 +3,7 @@ package com.techzen.academy_n1224c1.model;
 import com.techzen.academy_n1224c1.enums.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Getter

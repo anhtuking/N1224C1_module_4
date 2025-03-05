@@ -1,9 +1,14 @@
 package com.techzen.academy_n1224c1.controller;
 
 import com.techzen.academy_n1224c1.dto.ApiException;
+import com.techzen.academy_n1224c1.dto.ApiResponse;
 import com.techzen.academy_n1224c1.dto.JsonResponse;
 import com.techzen.academy_n1224c1.exception.ErrorCode;
 import com.techzen.academy_n1224c1.model.Department;
+import com.techzen.academy_n1224c1.service.IDepartmentService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,57 +18,49 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DepartmentController {
-    private final List<Department> departments = new ArrayList<>(
-            Arrays.asList(
-                    new Department(1, "Manage"),
-                    new Department(2, "Accountant"),
-                    new Department(3, "Sale-Marketing"),
-                    new Department(4, "Manufacture")
-            )
-    );
+    IDepartmentService departmentService;
 
     @GetMapping
-    public ResponseEntity<?> getAllDepartments() {
-        return JsonResponse.ok(departments);
+    private ResponseEntity<?> getAll() {
+        return JsonResponse.ok(departmentService.getAll());
     }
+
+//    @GetMapping
+//    public ResponseEntity<?> getDepartmentByName(@RequestParam(defaultValue = "") String name) {
+//        return ResponseEntity.ok(departmentService.findByNameContaining(name));
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getDepartmentById(@PathVariable("id") int id) {
-        for (Department department : departments) {
-            if (department.getId() == id) {
-                return JsonResponse.ok(department);
-            }
+        if(departmentService.findById(id) == null) {
+            throw new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST);
         }
-        throw new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST);
+        return JsonResponse.ok(departmentService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<?> createDepartment(@RequestBody Department department) {
-        department.setId((int) (Math.random()*1000000));
-        departments.add(department);
-        return JsonResponse.created(department);
+        return JsonResponse.created(departmentService.save(department));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDepartmentById(@PathVariable("id") int id, @RequestBody Department department) {
-        for (Department department1 : departments) {
-            if (department1.getId() == id) {
-                department1.setName(department.getName());
-                return JsonResponse.ok(department1);
-            }
+        if(departmentService.findById(id) == null) {
+            throw new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST);
         }
-        throw new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST);
+        department.setId(id);
+        return JsonResponse.ok(departmentService.save(department));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDepartmentById(@PathVariable("id") int id) {
-        for (Department department : departments) {
-            if (department.getId() == id) {
-                departments.remove(department);
-                return JsonResponse.ok(department);
-            }
+        if(departmentService.findById(id) == null) {
+            throw new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST);
         }
-        throw new ApiException(ErrorCode.DEPARTMENT_NOT_EXIST);
+        departmentService.delete(id);
+        return JsonResponse.noContent();
     }
 }

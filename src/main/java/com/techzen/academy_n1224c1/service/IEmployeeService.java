@@ -10,11 +10,11 @@ import java.util.UUID;
 public interface IEmployeeService {
     List<Employee> findByAttributes(EmployeeSearchRequest employeeSearchRequest);
 
-    List<Employee> findByName(String name);
+    List<Employee> findByNameContaining(String name);
 
-    Employee findByID(int id);
+    Employee findById(int id);
 
     Employee save(Employee employee);
 
-    Employee delete(int id);
+    void delete(int id);
 }
