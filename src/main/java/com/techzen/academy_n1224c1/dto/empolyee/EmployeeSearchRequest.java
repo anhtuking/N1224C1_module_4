@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 
 @Getter
@@ -25,4 +26,5 @@ public class EmployeeSearchRequest {
     String salaryRange;
     String phone;
     Integer departmentId;
+    Pageable pageable;
 }
